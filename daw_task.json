@@ -1,184 +1,165 @@
 {
-    "info": {
-        "name": "DAW Task API - Basic Auth",
-        "description": "Colección para probar la API de tareas con autenticación básica y control de roles.",
-        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-    },
-    "item": [
-        {
-            "name": "Tareas - Listar Propias",
-            "request": {
-                "method": "GET",
-                "header": [],
-                "url": {
-                    "raw": "http://localhost:8080/tareas",
-                    "protocol": "http",
-                    "host": [
-                        "localhost"
-                    ],
-                    "port": "8080",
-                    "path": [
-                        "tareas"
-                    ]
-                },
-                "description": "Lista las tareas del usuario autenticado actualmente."
-            },
-            "response": []
-        },
-        {
-            "name": "Tareas - Ver por ID",
-            "request": {
-                "method": "GET",
-                "header": [],
-                "url": {
-                    "raw": "http://localhost:8080/tareas/3",
-                    "protocol": "http",
-                    "host": [
-                        "localhost"
-                    ],
-                    "port": "8080",
-                    "path": [
-                        "tareas",
-                        "3"
-                    ]
-                },
-                "description": "Obtiene el detalle de una tarea si pertenece al usuario."
-            },
-            "response": []
-        },
-        {
-            "name": "Tareas - Crear Nueva",
-            "request": {
-                "method": "POST",
-                "header": [
-                    {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                    }
-                ],
-                "body": {
-                    "mode": "raw",
-                    "raw": "{\n    \"titulo\": \"Tarea de prueba Postman\",\n    \"descripcion\": \"Creada desde la colecci\\u00f3n\",\n    \"fechaVencimiento\": \"2024-12-31\",\n    \"estado\": \"PENDIENTE\"\n}"
-                },
-                "url": {
-                    "raw": "http://localhost:8080/tareas",
-                    "protocol": "http",
-                    "host": [
-                        "localhost"
-                    ],
-                    "port": "8080",
-                    "path": [
-                        "tareas"
-                    ]
-                }
-            },
-            "response": []
-        },
-        {
-            "name": "Tareas - Iniciar (Estado)",
-            "request": {
-                "method": "PUT",
-                "header": [],
-                "url": {
-                    "raw": "http://localhost:8080/tareas/3/iniciar",
-                    "protocol": "http",
-                    "host": [
-                        "localhost"
-                    ],
-                    "port": "8080",
-                    "path": [
-                        "tareas",
-                        "3",
-                        "iniciar"
-                    ]
-                }
-            },
-            "response": []
-        },
-        {
-            "name": "Tareas - Completar (Estado)",
-            "request": {
-                "method": "PUT",
-                "header": [],
-                "url": {
-                    "raw": "http://localhost:8080/tareas/3/completar",
-                    "protocol": "http",
-                    "host": [
-                        "localhost"
-                    ],
-                    "port": "8080",
-                    "path": [
-                        "tareas",
-                        "3",
-                        "completar"
-                    ]
-                }
-            },
-            "response": []
-        },
-        {
-            "name": "Tareas - Editar (Solo ADMIN)",
-            "request": {
-                "method": "PUT",
-                "header": [
-                    {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                    }
-                ],
-                "body": {
-                    "mode": "raw",
-                    "raw": "{\n    \"titulo\": \"Tarea Modificada por Admin\",\n    \"descripcion\": \"Esta acci\\u00f3n requiere rol ADMIN\",\n    \"estado\": \"EN_PROGRESO\"\n}"
-                },
-                "url": {
-                    "raw": "http://localhost:8080/tareas/1",
-                    "protocol": "http",
-                    "host": [
-                        "localhost"
-                    ],
-                    "port": "8080",
-                    "path": [
-                        "tareas",
-                        "1"
-                    ]
-                }
-            },
-            "response": []
-        },
-        {
-            "name": "Tareas - Borrar (Solo ADMIN)",
-            "request": {
-                "method": "DELETE",
-                "header": [],
-                "url": {
-                    "raw": "http://localhost:8080/tareas/1",
-                    "protocol": "http",
-                    "host": [
-                        "localhost"
-                    ],
-                    "port": "8080",
-                    "path": [
-                        "tareas",
-                        "1"
-                    ]
-                }
-            },
-            "response": []
-        }
-    ],
-    "auth": {
-        "type": "basic",
-        "basic": [
-            {
-                "key": "password",
-                "value": "1234",
-                "type": "string"
-            },
-            {
-                "key": "username",
-                "value": "admin01",
-                "type": "string"
-            }
-        ]
-    }
+	"info": {
+		"name": "DAW Task API - Entrega Final V2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ADMIN - Control Total",
+			"item": [
+				{
+					"name": "Listar TODAS las tareas",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [{"key": "password","value": "1234","type": "string"},{"key": "username","value": "admin01","type": "string"}]
+						},
+						"method": "GET",
+						"url": "http://localhost:8081/tareas"
+					}
+				},
+				{
+					"name": "Ver Tarea por ID",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [{"key": "password","value": "1234","type": "string"},{"key": "username","value": "admin01","type": "string"}]
+						},
+						"method": "GET",
+						"url": "http://localhost:8081/tareas/1"
+					}
+				},
+				{
+					"name": "Crear Nueva Tarea",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [{"key": "password","value": "1234","type": "string"},{"key": "username","value": "admin01","type": "string"}]
+						},
+						"method": "POST",
+						"header": [{"key": "Content-Type","value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"titulo\": \"Tarea creada por Admin\",\n    \"descripcion\": \"Prueba de creación\",\n    \"fechaVencimiento\": \"2026-12-31\"\n}"
+						},
+						"url": "http://localhost:8081/tareas"
+					}
+				},
+				{
+					"name": "Modificar Estado - Iniciar",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [{"key": "password","value": "1234","type": "string"},{"key": "username","value": "admin01","type": "string"}]
+						},
+						"method": "PUT",
+						"url": "http://localhost:8081/tareas/1/iniciar"
+					}
+				},
+				{
+					"name": "Modificar Estado - Completar",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [{"key": "password","value": "1234","type": "string"},{"key": "username","value": "admin01","type": "string"}]
+						},
+						"method": "PUT",
+						"url": "http://localhost:8081/tareas/1/completar"
+					}
+				},
+				{
+					"name": "Editar Tarea (Campos)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [{"key": "password","value": "1234","type": "string"},{"key": "username","value": "admin01","type": "string"}]
+						},
+						"method": "PUT",
+						"header": [{"key": "Content-Type","value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"titulo\": \"Título Editado\",\n    \"descripcion\": \"Descripción Editada\",\n    \"fechaVencimiento\": \"2027-01-01\"\n}"
+						},
+						"url": "http://localhost:8081/tareas/1"
+					}
+				},
+				{
+					"name": "Borrar Tarea",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [{"key": "password","value": "1234","type": "string"},{"key": "username","value": "admin01","type": "string"}]
+						},
+						"method": "DELETE",
+						"url": "http://localhost:8081/tareas/1"
+					}
+				}
+			]
+		},
+		{
+			"name": "USER - Acceso Restringido",
+			"item": [
+				{
+					"name": "Listar MIS tareas",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [{"key": "password","value": "1234","type": "string"},{"key": "username","value": "juan85","type": "string"}]
+						},
+						"method": "GET",
+						"url": "http://localhost:8081/tareas"
+					}
+				},
+				{
+					"name": "Ver Mi Tarea por ID",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [{"key": "password","value": "1234","type": "string"},{"key": "username","value": "juan85","type": "string"}]
+						},
+						"method": "GET",
+						"url": "http://localhost:8081/tareas/3"
+					}
+				},
+				{
+					"name": "Crear Mi Tarea",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [{"key": "password","value": "1234","type": "string"},{"key": "username","value": "juan85","type": "string"}]
+						},
+						"method": "POST",
+						"header": [{"key": "Content-Type","value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"titulo\": \"Tarea de Juan\",\n    \"descripcion\": \"Creada por usuario\",\n    \"fechaVencimiento\": \"2026-05-05\"\n}"
+						},
+						"url": "http://localhost:8081/tareas"
+					}
+				},
+				{
+					"name": "Modificar Estado - Iniciar",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [{"key": "password","value": "1234","type": "string"},{"key": "username","value": "juan85","type": "string"}]
+						},
+						"method": "PUT",
+						"url": "http://localhost:8081/tareas/3/iniciar"
+					}
+				},
+				{
+					"name": "Modificar Estado - Completar",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [{"key": "password","value": "1234","type": "string"},{"key": "username","value": "juan85","type": "string"}]
+						},
+						"method": "PUT",
+						"url": "http://localhost:8081/tareas/3/completar"
+					}
+				}
+			]
+		}
+	]
 }

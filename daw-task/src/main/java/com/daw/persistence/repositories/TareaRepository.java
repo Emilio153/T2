@@ -11,6 +11,6 @@ public interface TareaRepository extends ListCrudRepository<Tarea, Integer> {
 	
 	List<Tarea> findByEstado(Estado estado);	
 	List<Tarea> findByUsuarioUsername(String username);
-
+	List<Tarea> findByEstadoAndUsuarioUsername(Estado estado, String username);
 
 }

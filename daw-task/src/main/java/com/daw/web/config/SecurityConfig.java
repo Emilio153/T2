@@ -23,31 +23,38 @@ public class SecurityConfig {
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
-			.csrf(csrf -> csrf.disable())
+			.csrf(csrf -> csrf.disable()) // Desactivado según página 16 de los apuntes
 			.cors(cors -> cors.configurationSource(corsConfigurationSource()))
 			.authorizeHttpRequests(auth -> auth
-				.requestMatchers(HttpMethod.GET, "/tareas").hasAnyRole("ADMIN", "USER")
-				.requestMatchers(HttpMethod.GET, "/tareas/*").hasAnyRole("ADMIN", "USER")
+				// 1. Permisos para listar y ver detalles (Ambos roles)
+				.requestMatchers(HttpMethod.GET, "/tareas", "/tareas/*", "/tareas/pendientes", "/tareas/en-progreso", "/tareas/completadas").hasAnyRole("ADMIN", "USER")
+				
+				// 2. Permiso para crear tareas (Ambos roles)
+				.requestMatchers(HttpMethod.POST, "/tareas").hasAnyRole("ADMIN", "USER")
+				
+				// 3. Permisos para modificar el estado (iniciar y completar) (Ambos roles)
+				.requestMatchers(HttpMethod.PUT, "/tareas/*/iniciar", "/tareas/*/completar").hasAnyRole("ADMIN", "USER")
+				
+				// 4. CONTROL TOTAL ADMIN: Solo el administrador puede Editar (PUT completo) y Borrar (DELETE)
+				// Estas rutas corresponden a los métodos update y delete del controlador
+				.requestMatchers(HttpMethod.PUT, "/tareas/*").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.DELETE, "/tareas/*").hasRole("ADMIN")
+				
 				.anyRequest().authenticated()
 			)
-			.httpBasic(Customizer.withDefaults());
+			.httpBasic(Customizer.withDefaults()); // Autenticación básica según página 13
 			
 		return http.build();
 	}
 	
-	
 	@Bean
 	PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
+		return new BCryptPasswordEncoder(); // Según página 26 de los apuntes
 	}
 	
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        // Divide la cadena por comas y elimina espacios en blanco
-//        List<String> allowedOrigins = Arrays.stream(frontendUrls.split(","))
-//                                            .map(String::trim)
-//                                            .toList();
         List<String> allowedOrigins = Arrays.asList("http://localhost:4200");
         configuration.setAllowedOrigins(allowedOrigins);
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
@@ -59,6 +66,4 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-	
-
 }
